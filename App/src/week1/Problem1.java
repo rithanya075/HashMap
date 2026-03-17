@@ -1,9 +1,16 @@
+package week1;
+
 import java.util.*;
 
-public class HashMap {
+public class Problem1 {
 
-    private Map<String, Integer> users = new java.util.HashMap<>();
-    private Map<String, Integer> attempts = new java.util.HashMap<>();
+    private Map<String, Integer> users;
+    private Map<String, Integer> attempts;
+
+    public Problem1() {
+        users = new HashMap<>();
+        attempts = new HashMap<>();
+    }
 
     // Check availability
     public boolean checkAvailability(String username) {
@@ -29,21 +36,27 @@ public class HashMap {
         return suggestions;
     }
 
-    // Most attempted username
+    // Get most attempted username
     public String getMostAttempted() {
-        return Collections.max(attempts.entrySet(), Map.Entry.comparingByValue()).getKey();
+        if (attempts.isEmpty()) return "No attempts yet";
+
+        return Collections.max(
+                attempts.entrySet(),
+                Map.Entry.comparingByValue()
+        ).getKey();
     }
 
     public static void main(String[] args) {
 
-        HashMap checker = new HashMap();
+        Problem1 checker = new Problem1();
 
         checker.registerUser("john_doe", 1);
 
-        System.out.println(checker.checkAvailability("john_doe")); // false
-        System.out.println(checker.checkAvailability("jane_smith")); // true
+        System.out.println("john_doe available? " + checker.checkAvailability("john_doe"));
+        System.out.println("jane_smith available? " + checker.checkAvailability("jane_smith"));
 
-        System.out.println(checker.suggestAlternatives("john_doe"));
+        System.out.println("Suggestions: " + checker.suggestAlternatives("john_doe"));
+
         System.out.println("Most attempted: " + checker.getMostAttempted());
     }
 }
